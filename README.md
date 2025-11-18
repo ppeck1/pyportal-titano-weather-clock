@@ -7,6 +7,12 @@ This project demonstrates embedded firmware development, Wi-Fi API integration, 
 
 ## Overview
 
+## Why this project exists
+
+This project started as a way to learn real embedded development on hardware that is not heavily documented. The PyPortal Titano has a larger portrait display and slightly different constraints than the more common PyPortal examples. Building this weather and clock display required combining CircuitPython, Wi-Fi APIs, UI layout work, and sensor handling into a single, working device.
+
+It now serves as a reference for anyone who wants a concrete example of a small but complete firmware project: it talks to external services, renders a usable interface, and runs on real hardware on a desk, not just in a simulator.
+
 This firmware turns the PyPortal Titano into a desk display showing:
 
 | Component | Description |
@@ -21,7 +27,8 @@ This firmware turns the PyPortal Titano into a desk display showing:
 ---
 
 ## Example
-(Example image stored in repository: pyportal_titano_weather_clock_example.jpg)
+![PyPortal Titano showing time, date, and weather in portrait orientation](pyportal_titano_weather_clock_example.jpg)
+
 
 ---
 
@@ -52,6 +59,7 @@ pyportal-titano-weather-clock/
 ---
 
 ## Setup
+The steps below assume that CircuitPython is already installed on the PyPortal Titano and that the board appears as the CIRCUITPY drive on your computer.
 
 ### 1. Install CircuitPython
 Install CircuitPython for the PyPortal Titano:
@@ -89,16 +97,17 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 ---
 
-## Skills Demonstrated
 
-| Area | Description |
-|-------|-------------|
-| Firmware development | CircuitPython hardware-level programming |
-| REST API integration | JSON weather API and time server |
-| Display UI rendering | Text and image layout for portrait mode |
-| Hardware interaction | Light sensor-based dimming |
-| Secure repo design | .gitignore + secrets handling |
-| Debugging | Hardware and software iterative testing |
+## Skills demonstrated
+
+- CircuitPython firmware development on microcontroller hardware  
+- Integration with external REST APIs for time and weather data  
+- Display layout and rendering for a constrained portrait screen  
+- Light sensor-based control and hardware abstraction  
+- Debugging of network, timing, and rendering issues on a physical device  
+- Secure handling of configuration and credentials with secrets.py  
+- Use of Git, GitHub topics, releases, and project structure for a small embedded project
+
 
 ---
 
@@ -125,4 +134,11 @@ MIT License
 
 ## Acknowledgements
 Adafruit Industries for hardware reference docs and CircuitPython examples.
-"""
+
+---
+
+## Project metadata
+
+- License: see the `LICENSE` file in the repository root (MIT)  
+- Change history: see `CHANGELOG.md` for released versions  
+- Stable version: the latest tagged release is `v1.0.0`
