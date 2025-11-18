@@ -1,0 +1,17 @@
+# Ignore secrets and credentials
+secrets.py
+settings.toml
+
+# Ignore compiled or cached Python files
+__pycache__/
+*.mpy
+
+# Ignore OS-generated trash files
+.Trash-1000
+.Trashes
+.fseventsd
+.DS_Store
+Thumbs.db
+
+# Ignore CircuitPython filesystem metadata
+.metadata_never_index
