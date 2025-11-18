@@ -46,15 +46,19 @@ This firmware turns the PyPortal Titano into a desk display showing:
 
 ## Repository Structure
 
+```
 pyportal-titano-weather-clock/
 ├── code.py
 ├── .gitignore
 ├── README.md
-├── secrets_example.py
+├── EXAMPLE_secrets.py
+├── LICENSE
 ├── pyportal_titano_weather_clock_example.jpg
 ├── fonts/
 │   └── 04b30-20.bdf
-└── weather_icons_32x32_9.bmp
+├── weather_icons_32x32_9.bmp
+└── Changelog
+```
 
 ---
 
