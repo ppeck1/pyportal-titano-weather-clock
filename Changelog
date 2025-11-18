@@ -1,0 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+This project adheres to semantic versioning.
+
+## v1.0.0
+Initial public release
+
+- First published version of the PyPortal Titano Weather and Clock Display firmware
+- Added code.py, required fonts, and weather icon assets
+- Added secrets_example.py for secure configuration setup
+- Added README with setup instructions and example screenshot
+- Added .gitignore for security and cleanliness
+- Structured repository and created v1.0.0 tagged release
