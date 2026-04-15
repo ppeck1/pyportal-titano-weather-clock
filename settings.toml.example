@@ -1,0 +1,35 @@
+# settings.toml.example
+# Copy this file to settings.toml and fill in your values.
+# settings.toml is read by CircuitPython at boot via os.getenv().
+# NEVER commit your real settings.toml to git.
+
+# ── Wi-Fi ─────────────────────────────────────────────────────────────────────
+CIRCUITPY_WIFI_SSID="YOUR_WIFI_NETWORK_NAME"
+CIRCUITPY_WIFI_PASSWORD="YOUR_WIFI_PASSWORD"
+
+# ── Location ──────────────────────────────────────────────────────────────────
+# IANA timezone name: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+TIMEZONE="America/New_York"
+
+# Decimal latitude / longitude for your location
+LATITUDE="40.1100"
+LONGITUDE="-82.9300"
+
+# Temperature unit: "true" = Fahrenheit, "false" = Celsius
+USE_FAHRENHEIT="true"
+
+# ── Refresh intervals (seconds) ───────────────────────────────────────────────
+WEATHER_REFRESH_SECS="600"        # 10 min — direct Open-Meteo fetch
+DASHBOARD_REFRESH_SECS="300"      # 5 min  — full dashboard.json fetch
+TIME_RESYNC_SECS="600"            # 10 min — NTP resync
+
+# ── UI timing ─────────────────────────────────────────────────────────────────
+AMBIENT_ROTATE_SECS="12"          # seconds per page in ambient rotation
+MANUAL_TIMEOUT_SECS="25"          # seconds of idle before resuming ambient mode
+
+# ── Dashboard feed (optional) ─────────────────────────────────────────────────
+# If set, the device fetches this URL for weather + calendar + tasks.
+# Leave empty to use direct Open-Meteo weather only (no calendar/tasks).
+# See docs/architecture.md for the expected JSON shape.
+DASHBOARD_JSON_URL=""
+# DASHBOARD_JSON_URL="https://your-server.example.com/dashboard.json"
