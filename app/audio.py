@@ -37,6 +37,7 @@ class AudioManager:
     def __init__(self):
         self._mixer = None
         self._speaker = None
+        self._speaker_enable = None
         self._enabled = False
         self._pattern  = []
         self._step     = 0
@@ -49,12 +50,27 @@ class AudioManager:
         try:
             import audiopwmio
             import audiocore
+            import digitalio
             self._audiocore = audiocore
+            gate_label = "none"
+            # Some boards gate the speaker amplifier behind an enable pin.
+            for pin_name in ("SPEAKER_ENABLE", "SPEAKER_SHUTDOWN"):
+                if hasattr(board, pin_name):
+                    try:
+                        gate = digitalio.DigitalInOut(getattr(board, pin_name))
+                        gate.switch_to_output(value=True)
+                        self._speaker_enable = gate
+                        gate_label = pin_name
+                        break
+                    except Exception:
+                        pass
             # PyPortal Titano speaker pin
             self._speaker = audiopwmio.PWMAudioOut(board.SPEAKER)
             self._enabled = True
+            print("Audio init: AUDIO_OUT=PWMAudioOut SPEAKER=board.SPEAKER SPEAKER_ENABLE={}".format(gate_label))
         except Exception:
             self._enabled = False
+            print("Audio init: disabled (audio hw unavailable)")
 
     def play(self, sound_name, loop=False):
         """Start playing a named sound pattern."""
@@ -119,5 +135,10 @@ class AudioManager:
         if self._speaker:
             try:
                 self._speaker.deinit()
+            except Exception:
+                pass
+        if self._speaker_enable:
+            try:
+                self._speaker_enable.deinit()
             except Exception:
                 pass

@@ -85,10 +85,11 @@ OPEN_METEO_URL = (
     "http://api.open-meteo.com/v1/forecast"
     "?latitude={lat}&longitude={lon}"
     "&current=temperature_2m,weather_code"
-    "&hourly=temperature_2m,weather_code,time"
+    "&hourly=temperature_2m,weather_code"
     "&temperature_unit={unit}"
     "&forecast_days=2"
+    "&timezone=auto"
 )
 
-TIMEZONE_API_PRIMARY  = "http://worldtimeapi.org/api/ip"
-TIMEZONE_API_FALLBACK = "http://worldtimeapi.org/api/timezone/" + TIMEZONE
+TIMEZONE_API_PRIMARY  = "https://worldtimeapi.org/api/ip"
+TIMEZONE_API_FALLBACK = "https://worldtimeapi.org/api/timezone/" + TIMEZONE

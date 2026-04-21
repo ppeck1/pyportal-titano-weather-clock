@@ -21,12 +21,16 @@ def load_font(path):
     if path in _font_cache:
         return _font_cache[path]
     if _HAS_FONT:
-        try:
-            f = bitmap_font.load_font(path)
-            _font_cache[path] = f
-            return f
-        except Exception:
-            pass
+        candidates = (path, path.lstrip("/")) if path.startswith("/") else (path, "/" + path)
+        for candidate in candidates:
+            try:
+                f = bitmap_font.load_font(candidate)
+                print("Font load: ok path={}".format(candidate))
+                _font_cache[path] = f
+                return f
+            except Exception:
+                pass
+    print("Font load: fallback terminalio path={}".format(path))
     _font_cache[path] = terminalio.FONT
     return terminalio.FONT
 

@@ -14,12 +14,14 @@ class TimeService:
         self._last_attempt = 0.0
 
     def _sync_once(self, url):
+        print("Time sync: requesting {}".format(url))
         data = self._conn.get(url, timeout=8)
         epoch = int(data["unixtime"])
         raw_off = int(data.get("raw_offset", 0))
         dst_off = int(data.get("dst_offset", 0))
         offset  = raw_off + dst_off
         rtc.RTC().datetime = time.localtime(epoch + offset)
+        print("Time sync: success {}".format(url))
 
     def sync(self):
         """
@@ -34,7 +36,7 @@ class TimeService:
                     self._synced = True
                     return True
             except Exception:
-                pass
+                print("Time sync: failed {}".format(url))
         return False
 
     def update_if_due(self, state):
