@@ -67,15 +67,17 @@ Australia/Sydney
 
 ## Button Pin Mapping
 
-Button pins are set in `app/config.py` (not in `settings.toml`):
+Button pins can be set in `settings.toml` (preferred). This firmware supports
+both 2-button and 3-button setups.
 
-```python
-PIN_BACK = "D3"
-PIN_HOME = "D4"
-PIN_NEXT = "D5"
+```toml
+PIN_BACK="D3"
+PIN_HOME=""
+PIN_NEXT="D4"
 ```
 
-Change these string values if your buttons are wired to different pins.
+Recommended PyPortal Titano setup is 2-button (`D3` + `D4`), with `PIN_HOME=""`.
+In 2-button mode, pressing both buttons together emits `HOME`.
 
 ---
 

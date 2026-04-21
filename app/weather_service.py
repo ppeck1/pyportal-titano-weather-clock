@@ -25,6 +25,15 @@ class WeatherService:
     def _label_for_hour(self, hour_24):
         return "{:d} {}".format(hour_24 % 12 or 12, "AM" if hour_24 < 12 else "PM")
 
+    def _find_start_index(self, times, current_iso):
+        if not times:
+            return 0
+        if current_iso:
+            for i, stamp in enumerate(times):
+                if str(stamp) >= str(current_iso):
+                    return i
+        return 0
+
     def _normalize_forecast(self, raw_entries):
         forecast = list(raw_entries[:_MIN_FORECAST_ENTRIES])
         if forecast and len(forecast) < _MIN_FORECAST_ENTRIES:
@@ -49,11 +58,14 @@ class WeatherService:
         Returns True if successful; cache is updated on success.
         """
         try:
-            data = self._conn.get(self._build_url(), timeout=10)
+            url = self._build_url()
+            print("Weather fetch: requesting {}".format(url))
+            data = self._conn.get(url, timeout=10)
             cur  = data.get("current", {})
             temp = cur.get("temperature_2m")
             code = cur.get("weather_code")
             if temp is None:
+                print("Weather fetch: failed missing current temperature")
                 return False
 
             self._cache.current_temp  = float(temp)
@@ -66,9 +78,9 @@ class WeatherService:
             temps  = hourly.get("temperature_2m", [])
             codes  = hourly.get("weather_code", [])
             times  = hourly.get("time", [])
-            cur_hour = time.localtime().tm_hour
+            cur_time = cur.get("time")
             forecast = []
-            start_idx = cur_hour
+            start_idx = self._find_start_index(times, cur_time)
             for i in range(start_idx, len(temps)):
                 if len(forecast) >= _MIN_FORECAST_ENTRIES:
                     break
@@ -89,6 +101,9 @@ class WeatherService:
                     "hour_24": hour_24,
                 })
             self._cache.forecast = self._normalize_forecast(forecast)
+            print("Weather fetch: success temp={} code={} forecast_items={}".format(
+                self._cache.current_temp, self._cache.weather_code, len(self._cache.forecast)
+            ))
             return True
         except Exception as e:
             print("WeatherService: fetch failed:", e)

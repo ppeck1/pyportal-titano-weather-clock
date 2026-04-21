@@ -18,8 +18,8 @@ BTN_NEXT = "NEXT"
 
 # ── Default hardware config ──────────────────────────────────────────────────
 DEFAULT_PIN_BACK = "D3"
-DEFAULT_PIN_HOME = "D4"
-DEFAULT_PIN_NEXT = "D5"
+DEFAULT_PIN_HOME = ""
+DEFAULT_PIN_NEXT = "D4"
 DEFAULT_DEBOUNCE_SECS = 0.075
 
 # ── Page indices ─────────────────────────────────────────────────────────────

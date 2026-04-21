@@ -27,6 +27,13 @@ TIME_RESYNC_SECS="600"            # 10 min — NTP resync
 AMBIENT_ROTATE_SECS="12"          # seconds per page in ambient rotation
 MANUAL_TIMEOUT_SECS="25"          # seconds of idle before resuming ambient mode
 
+# ── Buttons (Titano 2-button recommended default) ────────────────────────────
+# This project supports 2-button or 3-button setups.
+# Recommended for PyPortal Titano builds that do not expose D5:
+PIN_BACK="D3"
+PIN_HOME=""
+PIN_NEXT="D4"
+
 # ── Dashboard feed (optional) ─────────────────────────────────────────────────
 # If set, the device fetches this URL for weather + calendar + tasks.
 # Leave empty to use direct Open-Meteo weather only (no calendar/tasks).
