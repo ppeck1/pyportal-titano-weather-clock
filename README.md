@@ -8,7 +8,7 @@ A modular, state-driven ambient desk display built on CircuitPython for the Adaf
 
 ## Overview
 
-This firmware turns the PyPortal Titano into a polished desk appliance that auto-rotates through seven full-screen information pages, responds to three physical buttons, and degrades gracefully when offline. It is designed to feel like an intentional embedded product — not a weekend script.
+This firmware turns the PyPortal Titano into a polished desk appliance that auto-rotates through seven full-screen information pages, responds to physical buttons (2-button or 3-button wiring), and degrades gracefully when offline. It is designed to feel like an intentional embedded product — not a weekend script.
 
 | Page | Content |
 |------|---------|
@@ -27,7 +27,7 @@ This firmware turns the PyPortal Titano into a polished desk appliance that auto
 | Component | Notes |
 |-----------|-------|
 | Adafruit PyPortal Titano | 480×320 portrait display + ESP32 AirLift Wi-Fi |
-| 3 momentary pushbuttons | Wired to D3 (BACK), D4 (HOME), D5 (NEXT) |
+| 2 or 3 momentary pushbuttons | Recommended: D3 (BACK), D4 (NEXT). Optional third button for HOME if available. |
 | Small speaker | Onboard; used for click / timer / alarm sounds |
 | Light sensor | Onboard; drives auto-brightness |
 
@@ -109,8 +109,8 @@ Attach momentary switches between the listed GPIO pins and GND. Internal pull-up
 | Function | Pin | Board label |
 |----------|-----|-------------|
 | BACK | D3 | GP3 |
-| HOME | D4 | GP4 |
-| NEXT | D5 | GP5 |
+| NEXT | D4 | GP4 |
+| HOME (optional) | configure in `settings.toml` | depends on your wiring |
 
 See [`docs/hardware-wiring.md`](docs/hardware-wiring.md) for full wiring details.
 

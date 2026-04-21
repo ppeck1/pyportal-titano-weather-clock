@@ -16,13 +16,16 @@
 
 ## Button Wiring
 
-The dashboard uses three external momentary pushbuttons. Wire each between a GPIO pin and GND. CircuitPython enables internal pull-up resistors automatically — **no external resistors are needed**.
+The dashboard supports both 2-button and 3-button setups. For PyPortal Titano,
+the recommended default is 2-button mode:
 
 ```
 PyPortal D3 ──── [BACK button] ──── GND
-PyPortal D4 ──── [HOME button] ──── GND
-PyPortal D5 ──── [NEXT button] ──── GND
+PyPortal D4 ──── [NEXT button] ──── GND
 ```
+
+`HOME` can be mapped to an optional third button if your hardware exposes one.
+In 2-button mode, pressing both buttons together emits `HOME`.
 
 ### Available GPIO breakouts on the Titano
 
@@ -34,16 +37,16 @@ The Titano has three JST-PH connectors on the rear that expose GPIO:
 | JST #2 | D5, A1, GND |
 | JST #3 | A2, A3, GND |
 
-D3, D4, D5 land on the first two connectors — a clean fit for three buttons using two JST cables.
+D3 and D4 are on JST #1 and are the safest default for this project.
 
 ### Alternative pin options
 
-If D3/D4/D5 are unavailable, edit `app/config.py`:
+If your pinout differs, set button pins in `settings.toml`:
 
-```python
-PIN_BACK = "A1"   # or any available digital GPIO
-PIN_HOME = "A2"
-PIN_NEXT = "A3"
+```toml
+PIN_BACK="A1"   # or any available digital GPIO
+PIN_HOME="A2"   # optional
+PIN_NEXT="A3"
 ```
 
 ---
