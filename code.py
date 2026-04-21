@@ -59,7 +59,7 @@ controller.mark_all_dirty()
 
 print("Connecting Wi-Fi...")
 state.mode = CONNECTING_WIFI
-wifi_ok = conn.connect()
+wifi_ok = conn.connect_with_retry(attempts=3, gap_secs=2.0)
 state.wifi_connected = wifi_ok
 print("Wi-Fi:", "ok" if wifi_ok else "failed")
 

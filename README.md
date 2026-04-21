@@ -14,11 +14,13 @@ This firmware turns the PyPortal Titano into a polished desk appliance that auto
 |------|---------|
 | **Clock / Weather** | Large time, date, current temperature, weather icon |
 | **Forecast** | Next 5 hourly periods — icon + label + temp |
-| **Calendar** | Next 3 events from your Google Calendar (via bridge) |
-| **Tasks** | Top 5 tasks from Google Tasks (via bridge) |
+| **Calendar** | Next 3 events from your Google Calendar (via bridge)\* |
+| **Tasks** | Top 5 tasks from Google Tasks (via bridge)\* |
 | **Timer** | 1 / 5 / 10 / 25 min countdown with alert |
 | **Alarm** | Single daily alarm — hour/minute editable |
 | **Status** | Wi-Fi, IP, sync ages, brightness, build info |
+
+\* On low-memory PyPortal builds, Calendar and Tasks pages may be disabled to prevent `MemoryError`.
 
 ---
 

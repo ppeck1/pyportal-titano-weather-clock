@@ -3,14 +3,20 @@
 # Pages import from here; no display state stored here.
 
 import time
+import os
 import terminalio
 import displayio
 from adafruit_display_text import label as adafruit_label
 
+_FONT_IMPORT_ERROR = None
 try:
     from adafruit_bitmap_font import bitmap_font
     _HAS_FONT = True
-except Exception:
+except ImportError as e:
+    _FONT_IMPORT_ERROR = e
+    _HAS_FONT = False
+except Exception as e:
+    _FONT_IMPORT_ERROR = e
     _HAS_FONT = False
 
 # ── Font loader ───────────────────────────────────────────────────────────────
@@ -24,12 +30,19 @@ def load_font(path):
         candidates = (path, path.lstrip("/")) if path.startswith("/") else (path, "/" + path)
         for candidate in candidates:
             try:
+                os.stat(candidate)
+            except Exception:
+                print("Font load: file not found path={}".format(candidate))
+                continue
+            try:
                 f = bitmap_font.load_font(candidate)
                 print("Font load: ok path={}".format(candidate))
                 _font_cache[path] = f
                 return f
-            except Exception:
-                pass
+            except Exception as e:
+                print("Font load: font file load failed path={} ({})".format(candidate, e))
+    else:
+        print("Font load: bitmap_font module missing ({})".format(_FONT_IMPORT_ERROR))
     print("Font load: fallback terminalio path={}".format(path))
     _font_cache[path] = terminalio.FONT
     return terminalio.FONT

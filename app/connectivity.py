@@ -89,6 +89,26 @@ class ConnectivityManager:
             self._mark_disconnected()
             return False
 
+    def connect_with_retry(self, attempts=3, gap_secs=2.0):
+        """Attempt Wi-Fi connection multiple times with concise diagnostics."""
+        ssid = self._ssid or ""
+        if len(ssid) <= 2:
+            ssid_masked = "*" * len(ssid)
+        else:
+            ssid_masked = "{}***{}".format(ssid[:1], ssid[-1:])
+        print("Wi-Fi SSID:", ssid_masked if ssid else "(empty)")
+
+        for i in range(1, max(1, int(attempts)) + 1):
+            print("Attempt {}/{}...".format(i, attempts))
+            ok = self.connect()
+            if ok:
+                print("Connected, IP={}".format(self._ip or "?"))
+                return True
+            print("Failed attempt {}/{}".format(i, attempts))
+            if i < attempts:
+                time.sleep(max(0.0, float(gap_secs)))
+        return False
+
     def update_if_due(self, state):
         """
         Periodically validate real connection state.

@@ -68,9 +68,14 @@ class AudioManager:
             self._speaker = audiopwmio.PWMAudioOut(board.SPEAKER)
             self._enabled = True
             print("Audio init: AUDIO_OUT=PWMAudioOut SPEAKER=board.SPEAKER SPEAKER_ENABLE={}".format(gate_label))
-        except Exception:
+        except Exception as e:
             self._enabled = False
+            has_speaker = hasattr(board, "SPEAKER")
+            has_gate = hasattr(board, "SPEAKER_ENABLE") or hasattr(board, "SPEAKER_SHUTDOWN")
             print("Audio init: disabled (audio hw unavailable)")
+            print("Audio init: failure AUDIO_OUT=PWMAudioOut SPEAKER={} SPEAKER_ENABLE={} err={}".format(
+                has_speaker, has_gate, e
+            ))
 
     def play(self, sound_name, loop=False):
         """Start playing a named sound pattern."""

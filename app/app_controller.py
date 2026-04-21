@@ -6,7 +6,7 @@ import time
 import displayio
 from app.constants import (
     BOOT, AMBIENT_ROTATE, MANUAL_NAV, FOCUSED_VIEW, ALARM_ACTIVE,
-    ERROR_RECOVERABLE, PAGE_HERO, PAGE_COUNT, PAGE_LABELS,
+    ERROR_RECOVERABLE, PAGE_HERO, PAGE_LABELS,
     BTN_BACK, BTN_HOME, BTN_NEXT,
     TIMER_IDLE,
 )
@@ -32,7 +32,7 @@ class AppController:
         # Lazy page registry: (class, extra_kwargs)
         # Pages are instantiated on first visit to conserve RAM
         self._page_classes = None   # set in _register_pages()
-        self._pages        = [None] * PAGE_COUNT
+        self._pages        = []
         self._current_page_obj = None
 
         self._register_pages()
@@ -44,21 +44,24 @@ class AppController:
     def _register_pages(self):
         from app.pages.hero_page     import HeroPage
         from app.pages.forecast_page import ForecastPage
-        from app.pages.calendar_page import CalendarPage
-        from app.pages.tasks_page    import TasksPage
         from app.pages.timer_page    import TimerPage
         from app.pages.alarm_page    import AlarmPage
         from app.pages.status_page   import StatusPage
 
+        # Calendar/Tasks pages are intentionally disabled on low-memory builds.
         self._page_classes = [
             (HeroPage,     {}),
             (ForecastPage, {}),
-            (CalendarPage, {}),
-            (TasksPage,    {}),
             (TimerPage,    {"timer_svc": self._timer, "audio": self._audio}),
             (AlarmPage,    {"alarm_svc": self._alarm, "audio": self._audio}),
             (StatusPage,   {}),
         ]
+        self._pages = [None] * len(self._page_classes)
+        print("AppController: active pages={}".format(len(self._page_classes)))
+
+    @property
+    def _page_count(self):
+        return len(self._page_classes)
 
     def _get_page(self, idx):
         if self._pages[idx] is None:
@@ -132,7 +135,7 @@ class AppController:
         if s.mode == AMBIENT_ROTATE:
             if (now - s.last_rotate_time) >= self._rotate_interval():
                 s.last_rotate_time = now
-                next_page = (s.current_page + 1) % PAGE_COUNT
+                next_page = (s.current_page + 1) % self._page_count
                 self._show_page(next_page)
 
     def _handle_nav(self, event, now):
@@ -143,12 +146,12 @@ class AppController:
             s.mode = MANUAL_NAV
         elif event == BTN_NEXT:
             self._audio.click()
-            next_p = (s.current_page + 1) % PAGE_COUNT
+            next_p = (s.current_page + 1) % self._page_count
             self._show_page(next_p)
             s.mode = MANUAL_NAV
         elif event == BTN_BACK:
             self._audio.click()
-            prev_p = (s.current_page - 1) % PAGE_COUNT
+            prev_p = (s.current_page - 1) % self._page_count
             self._show_page(prev_p)
             s.mode = MANUAL_NAV
 
