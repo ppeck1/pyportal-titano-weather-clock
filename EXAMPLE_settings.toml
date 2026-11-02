@@ -1,0 +1,4 @@
+# Copy to CIRCUITPY/settings.toml and replace both placeholders locally.
+# Keep the filled-in settings.toml out of source control.
+CIRCUITPY_WIFI_SSID = "YOUR_WIFI_NAME"
+CIRCUITPY_WIFI_PASSWORD = "YOUR_WIFI_PASSWORD"
